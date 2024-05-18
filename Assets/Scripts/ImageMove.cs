@@ -16,9 +16,9 @@ public class ImageMove : MonoBehaviour
     {
         gameObject.transform.position += new Vector3(-1.0f, 0.0f, 0.0f) * Time.deltaTime * MoveSpeed;
 
-        if(gameObject.transform.position.x < -14)
+        if(gameObject.transform.position.x < -44)
         {
-            gameObject.transform.position += new Vector3(24.0f, 0.0f, 0.0f);
+            gameObject.transform.position += new Vector3(30 , 0, 0);
         }
     }
 }
