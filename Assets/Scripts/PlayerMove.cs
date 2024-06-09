@@ -11,17 +11,63 @@ public class PlayerMove : MonoBehaviour
 
     private bool IsJump;
     private bool IsSit;
+    private bool IsPlay;
+
+    public int PlayerHp = 200;
+    public int PlayerAttack = 3;
+
+    public GameObject monster;
+    public int MonsterHp = 1;
 
     void Start()
     {
         IsJump = false;
         IsSit = false;
+        IsPlay = true;
     }
 
     void Update()
     {
         Jump();
         Sit();
+        GameOver();
+        Attack();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Monster"))
+        {
+            PlayerHp -= 20;
+        }
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            IsJump = false;
+            IsSit = false;
+        }
+    }
+
+    void Attack()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            MonsterHp -= PlayerAttack;
+        }
+
+        if(MonsterHp <=0)
+        {
+            Destroy(monster);
+        }
+    }    
+
+    void GameOver()
+    {
+        if (gameObject.CompareTag("Player"))
+        {
+            PlayerHp = 0;
+            IsPlay = false;
+        }
     }
 
     void Jump()
@@ -50,15 +96,5 @@ public class PlayerMove : MonoBehaviour
             }
         }
         else return;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision2D)
-    {
-        if (collision2D.gameObject.CompareTag("Ground"))
-        {
-            Debug.Log("Ãæµ¹");
-            IsJump = false;
-            IsSit = false;
-        }
     }
 }
